@@ -29,21 +29,30 @@ public class HttpServer {
             String inputLine, outputLine;
 
             boolean firstLine = true;
+            String path = null;
 
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Received: " + inputLine);
                 if (firstLine){
                     firstLine = false;
                     path = inputLine.split(" ")[1];
+
                 }
                 if (!in.ready()) {
                     break;
                 }
             }
-            outputLine = "HTTP/1.1 200 OK \r\n"
-                    + "Content-Type: text/html \r\n"
-                    + "\r\n"
-                    + getResponse();
+
+            outputLine = "HTTP/1.1 200 OK \r\n";
+
+
+            if (path.startsWith("/hello")){
+                outputLine += getHello("/hello");
+            } else {
+                outputLine += getResponse();
+            }
+
+
             out.println(outputLine);
 
             out.close();
@@ -54,12 +63,14 @@ public class HttpServer {
     }
 
     public static String getHello(String path){
-        String response = "\"msg\": \"Hello World!\"";
+        String response = "Content-Type: text/html \r\n"
+                + "\r\n" + "{\"msg\": \"Hello World!\"}";
         return response;
     }
 
     public static String getResponse(){
-        String response = "<!DOCTYPE html>\n" +
+        String response = "Content-Type: text/html \r\n"
+                + "\r\n <!DOCTYPE html>\n" +
                 "<html>\n" +
                 "    <head>\n" +
                 "        <title>Form Example</title>\n" +

@@ -18,6 +18,10 @@ Si aun no tienes instaladas estas tecnologias, los siguientes tutoriales te pued
 - Maven: https://www.youtube.com/watch?v=1QfiyR_PWxU
 - Git: https://www.youtube.com/watch?v=4xqVv2lTo40
 
-  ### Instalando el proyecto
+### Instalando el proyecto
 
-  
+Para haace una copia local del proyecto, debes arbir tu terminal, dirigirte a la carpeta donde quieras que este el proyecto y usar el siguiente comando
+
+```
+git clone 
+```

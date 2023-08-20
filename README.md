@@ -65,7 +65,7 @@ Y en la siguiente ruta encontraras el archivo index.html en donde si lo abres de
 ## Construido con
 
 * [Maven](https://maven.apache.org/) - Administrador de dependencias
-* [OMDAPI](www.omdbapi.com) - API externa de consulta
+* [OMDAPI](https://www.omdbapi.com) - API externa de consulta
 
 ## Version
 

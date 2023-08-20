@@ -1,8 +1,11 @@
-package org.arep.taller1;
+package org.arep.taller1.classexaples;
 
 import java.io.*;
 import java.net.*;
 
+/**
+ * Profe estas clases son las que hicimos en clase, no quería borrarlas por si las llego a necesitar después :D
+ */
 public class EchoClient {
     public static void main(String[] args) throws IOException {
         Socket echoSocket = null;

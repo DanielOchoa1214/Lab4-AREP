@@ -1,10 +1,25 @@
-package org.arep.taller1;
+package org.arep.taller1.webclient;
+
+import org.arep.taller1.apifacade.HttpConnection;
 
 import java.net.*;
 import java.io.*;
+import org.json.*;
 
+/**
+ * Web Client, this class is responsable for the creation a Socket between the client and the server and delivering any
+ * and all requests the client may need
+ * @author Daniel Ochoa
+ * @author Daniel Benavides
+ */
 public class HttpServer {
 
+
+    /**
+     * This method initiates the server, accepts and administrate client connections and handles the request of the client
+     * @param args Default arguments needed to make a main method
+     * @throws IOException Exception is thrown if something goes wrong during the handling if the connections
+     */
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
         try {
@@ -36,7 +51,6 @@ public class HttpServer {
                 if (firstLine){
                     firstLine = false;
                     path = inputLine.split(" ")[1];
-
                 }
                 if (!in.ready()) {
                     break;
@@ -46,10 +60,10 @@ public class HttpServer {
             outputLine = "HTTP/1.1 200 OK \r\n";
 
 
-            if (path.startsWith("/hello")){
-                outputLine += getHello("/hello");
+            if (path.startsWith("/movie")){
+                outputLine += getMovie(path);
             } else {
-                outputLine += getResponse();
+                outputLine += getIndex();
             }
 
 
@@ -62,28 +76,53 @@ public class HttpServer {
         serverSocket.close();
     }
 
-    public static String getHello(String path){
-        String response = "Content-Type: text/html \r\n"
-                + "\r\n" + "{\"msg\": \"Hello World!\"}";
-        return response;
+    /*
+    Method that builds the response when searching a movie
+     */
+    private static String getMovie(String path) throws IOException {
+        System.out.println(path);
+        return "Content-Type: text/json \r\n"
+                + "\r\n"
+                + movieDisplay(path);
     }
 
-    public static String getResponse(){
-        String response = "Content-Type: text/html \r\n"
+    /*
+    Method that creates the visuals displaying the movie info
+     */
+    private static String movieDisplay(String path) throws IOException {
+        String response = HttpConnection.getMovie(path.split("=")[1]);
+        JSONObject object = new JSONObject(response);
+        return "<div>" +
+                "<h2>"+ object.get("Title") + "</h2>" +
+                "<h3>"+ object.get("Year") + "</h3>" +
+                "<p> Director: " + object.get("Director") + "</p>" +
+                "<p> Genre: " + object.get("Genre") + "</p>" +
+                "<p> Rating: " + object.get("Rated") + "</p>" +
+                "<img src=\"" + object.get("Poster") + "\"/>" +
+                "<p>" + object.get("Plot") + "</p>" +
+                "</div>\n";
+    }
+
+    /*
+    Mehot that return the main index of the web page
+     */
+    private static String getIndex(){
+        return "Content-Type: text/html \r\n"
                 + "\r\n <!DOCTYPE html>\n" +
                 "<html>\n" +
                 "    <head>\n" +
-                "        <title>Form Example</title>\n" +
+                "        <title>Movie searcher</title>\n" +
                 "        <meta charset=\"UTF-8\">\n" +
                 "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
                 "    </head>\n" +
                 "    <body>\n" +
-                "        <h1>Form with GET</h1>\n" +
+                "        <h1>Movie searcher</h1>\n" +
                 "        <form action=\"/hello\">\n" +
                 "            <label for=\"name\">Name:</label><br>\n" +
                 "            <input type=\"text\" id=\"name\" name=\"name\" value=\"John\"><br><br>\n" +
-                "            <input type=\"button\" value=\"Submit\" onclick=\"loadGetMsg()\">\n" +
+                "            <input type=\"button\" value=\"Search\" onclick=\"loadGetMsg()\">\n" +
                 "        </form> \n" +
+                "        <hr>" +
                 "        <div id=\"getrespmsg\"></div>\n" +
                 "\n" +
                 "        <script>\n" +
@@ -94,31 +133,12 @@ public class HttpServer {
                 "                    document.getElementById(\"getrespmsg\").innerHTML =\n" +
                 "                    this.responseText;\n" +
                 "                }\n" +
-                "                xhttp.open(\"GET\", \"/hello?name=\"+nameVar);\n" +
+                "                xhttp.open(\"GET\", \"/movie?name=\"+nameVar);\n" +
                 "                xhttp.send();\n" +
                 "            }\n" +
                 "        </script>\n" +
                 "\n" +
-                "        <h1>Form with POST</h1>\n" +
-                "        <form action=\"/hellopost\">\n" +
-                "            <label for=\"postname\">Name:</label><br>\n" +
-                "            <input type=\"text\" id=\"postname\" name=\"name\" value=\"John\"><br><br>\n" +
-                "            <input type=\"button\" value=\"Submit\" onclick=\"loadPostMsg(postname)\">\n" +
-                "        </form>\n" +
-                "        \n" +
-                "        <div id=\"postrespmsg\"></div>\n" +
-                "        \n" +
-                "        <script>\n" +
-                "            function loadPostMsg(name){\n" +
-                "                let url = \"/hellopost?name=\" + name.value;\n" +
-                "\n" +
-                "                fetch (url, {method: 'POST'})\n" +
-                "                    .then(x => x.text())\n" +
-                "                    .then(y => document.getElementById(\"postrespmsg\").innerHTML = y);\n" +
-                "            }\n" +
-                "        </script>\n" +
                 "    </body>\n" +
                 "</html>";
-        return response;
     }
 }

@@ -20,8 +20,18 @@ Si aun no tienes instaladas estas tecnologias, los siguientes tutoriales te pued
 
 ### Instalando el proyecto
 
-Para haace una copia local del proyecto, debes arbir tu terminal, dirigirte a la carpeta donde quieras que este el proyecto y usar el siguiente comando
+Para hacer una copia local del proyecto, debes abrir tu terminal, dirigirte a la carpeta donde quieras que este el proyecto y usar el siguiente comando
 
 ```
-git clone 
+git clone https://github.com/DanielOchoa1214/Lab1-AREP.git
 ```
+
+Luego muevete al directorio creado con el momando anterior y desde ahi ejecuta este comando
+
+```
+mvn exec:java
+```
+
+Ya que la aplicacion haya iniciado, puedes dirigirte a tu navegador de preferencia y entrar en http://localhost:35000 para ver la app corriendo, en ella encontraras una barra de busqueda y un boton. Si quieres buscar una pelicula solo debes poner el titulo en la barra y darle click al boton (Nota: el hacer enter no funcionara, solo recargaras la pagina)
+
+<img width="1680" alt="Ejemplo busqueda" src="https://github.com/DanielOchoa1214/Lab1-AREP/assets/77862016/9be37034-82fa-4650-a3c4-34dd8dda9b81">

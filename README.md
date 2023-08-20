@@ -74,7 +74,7 @@ Y en la siguiente ruta encontraras el archivo index.html en donde si lo abres de
 
 ## Autores
 
-Daniel Sebastián Ochoa Urrego - !(https://github.com/DanielOchoa1214)[DanielOchoa1214]
+Daniel Sebastián Ochoa Urrego - [DanielOchoa1214](https://github.com/DanielOchoa1214)
 
 ## Licencia
 

@@ -66,12 +66,26 @@ Y en la siguiente ruta encontraras el archivo index.html en donde si lo abres de
 
 * [Maven](https://maven.apache.org/) - Administrador de dependencias
 * [OMDAPI](https://www.omdbapi.com) - API externa de consulta
+* Amor
 
 ## Version
 
-## Lisencia
+1.0-SNAPSHOT
+
+## Autores
+
+Daniel Sebastián Ochoa Urrego - (DanielOchoa1214)[https://github.com/DanielOchoa1214]
+
+## Licencia
+
+GNU General Public License family
 
 ## Diseño
 
+
+
 ## Agradecimientos
+
+* A nuestro querido profesor de Arquitectura empresariales Daniel Benavides
+* Figo
 

@@ -4,6 +4,10 @@ import org.arep.taller1.apifacade.HttpConnection;
 
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
+
+import org.arep.taller1.webclient.filehandlers.ResponseController;
+import org.arep.taller1.webclient.filehandlers.impl.TextResponse;
 import org.json.*;
 
 /**
@@ -21,6 +25,7 @@ public class HttpServer {
      * @throws IOException Exception is thrown if something goes wrong during the handling if the connections
      */
     public static void main(String[] args) throws IOException {
+
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(35000);
@@ -39,41 +44,25 @@ public class HttpServer {
                 System.exit(1);
             }
 
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String inputLine, outputLine;
 
-            boolean firstLine = true;
-            String path = null;
+            String inputLine = in.readLine();
+            String path = inputLine.split(" ")[1];
+            System.out.println("Received: " + inputLine);
+            if (true) {
 
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println("Received: " + inputLine);
-                if (firstLine){
-                    firstLine = false;
-                    path = inputLine.split(" ")[1];
-                }
-                if (!in.ready()) {
-                    break;
-                }
             }
 
-            outputLine = "HTTP/1.1 200 OK \r\n";
+            ResponseController x = new TextResponse(clientSocket);
+            x.sendResponse();
 
-
-            if (path.startsWith("/movie")){
-                outputLine += getMovie(path);
-            } else {
-                outputLine += getIndex();
-            }
-
-
-            out.println(outputLine);
-
-            out.close();
             in.close();
-            clientSocket.close();
         }
         serverSocket.close();
+    }
+
+    private static boolean fileExists(){
+
     }
 
     /*
@@ -104,11 +93,11 @@ public class HttpServer {
     }
 
     /*
-    Mehot that return the main index of the web page
+    Method that return the main index of the web page
      */
     private static String getIndex(){
-        return "Content-Type: text/html \r\n"
-                + "\r\n <!DOCTYPE html>\n" +
+        return "Content-Type: text/html \r\n" +
+                "\r\n <!DOCTYPE html>\n" +
                 "<html>\n" +
                 "    <head>\n" +
                 "        <title>Movie searcher</title>\n" +

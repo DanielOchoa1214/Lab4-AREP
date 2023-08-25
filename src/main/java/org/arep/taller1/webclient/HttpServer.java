@@ -4,9 +4,12 @@ import org.arep.taller1.apifacade.HttpConnection;
 
 import java.net.*;
 import java.io.*;
-import java.util.Scanner;
+import java.util.Arrays;
+import java.util.List;
 
-import org.arep.taller1.webclient.filehandlers.ResponseController;
+import org.arep.taller1.webclient.filehandlers.ResponseInterface;
+import org.arep.taller1.webclient.filehandlers.impl.ErrorResponse;
+import org.arep.taller1.webclient.filehandlers.impl.ImageResponse;
 import org.arep.taller1.webclient.filehandlers.impl.TextResponse;
 import org.json.*;
 
@@ -18,13 +21,18 @@ import org.json.*;
  */
 public class HttpServer {
 
+    private static ResponseInterface responseInterface;
+
+    private static final List<String> supportedImgFormats = Arrays.asList("jpg", "png", "ico");
+
+    private static final List<String> supportedTextFormats = Arrays.asList("html", "css", "js");
 
     /**
      * This method initiates the server, accepts and administrate client connections and handles the request of the client
      * @param args Default arguments needed to make a main method
      * @throws IOException Exception is thrown if something goes wrong during the handling if the connections
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, URISyntaxException {
 
         ServerSocket serverSocket = null;
         try {
@@ -48,21 +56,53 @@ public class HttpServer {
 
             String inputLine = in.readLine();
             String path = inputLine.split(" ")[1];
+            URI resourcePath = new URI("/target/classes/public" + path);
             System.out.println("Received: " + inputLine);
-            if (true) {
-
-            }
-
-            ResponseController x = new TextResponse(clientSocket);
-            x.sendResponse();
+            sendResponse(resourcePath, clientSocket);
 
             in.close();
         }
         serverSocket.close();
     }
 
-    private static boolean fileExists(){
+    private static void sendResponse(URI resourcePath, Socket clientSocket) throws IOException, URISyntaxException {
+        char lastChar = resourcePath.getPath().charAt(resourcePath.getPath().length() - 1);
+        String fileType = getFileType(resourcePath);
+        if (lastChar == '/') {
+            responseInterface = new TextResponse(clientSocket, "html", new URI(resourcePath.getPath() + "/index.html"));
+        } else if (!fileExists(resourcePath)){
+            responseInterface = new ErrorResponse(clientSocket);
+        } else if (isImage(resourcePath)) {
+            responseInterface = new ImageResponse(clientSocket, fileType, resourcePath);
+        } else if (isText(resourcePath)) {
+            responseInterface = new TextResponse(clientSocket, fileType, resourcePath);
+        } else {
+            responseInterface = new ErrorResponse(clientSocket);
+        }
+        responseInterface.sendResponse();
+    }
 
+    private static String getFileType(URI path){
+        String fileFormat = "";
+        try {
+            fileFormat = path.getPath().split("\\.")[1];
+        } catch (ArrayIndexOutOfBoundsException e){}
+        return fileFormat;
+    }
+
+    private static boolean isText(URI path){
+        String fileFormat = path.getPath().split("\\.")[1];
+        return supportedTextFormats.contains(fileFormat);
+    }
+
+    private static boolean isImage(URI path){
+        String fileFormat = path.getPath().split("\\.")[1];
+        return supportedImgFormats.contains(fileFormat);
+    }
+
+    private static boolean fileExists(URI path) {
+        File file = new File(System.getProperty("user.dir") + path);
+        return file.exists();
     }
 
     /*

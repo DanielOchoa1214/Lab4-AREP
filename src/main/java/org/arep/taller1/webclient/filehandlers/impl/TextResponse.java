@@ -1,16 +1,28 @@
 package org.arep.taller1.webclient.filehandlers.impl;
 
-import org.arep.taller1.webclient.filehandlers.ResponseController;
+import org.arep.taller1.webclient.filehandlers.ResponseInterface;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Scanner;
 
-public class TextResponse implements ResponseController {
+public class TextResponse implements ResponseInterface {
     private Socket clientSocket;
+    private String fileType;
+    private URI filePath;
 
-    public TextResponse(Socket clientSocket){
+    public TextResponse(Socket clientSocket, String fileType, URI filePath){
         this.clientSocket = clientSocket;
+        this.fileType = fileType;
+        try {
+            this.filePath = new URI("." + filePath);
+        }catch (URISyntaxException e){
+            this.filePath = filePath;
+        }
+
     }
 
     @Override
@@ -19,9 +31,9 @@ public class TextResponse implements ResponseController {
         String outputLine;
 
         outputLine = "HTTP/1.1 200 OK \r\n" +
-                    "Content-Type: text/html \r\n" +
+                    "Content-Type: " + getMimeType() + " \r\n" +
                     "\r\n";
-        outputLine += readFile("./target/classes/public/index.html");
+        outputLine += ResponseInterface.readFile(filePath.getPath());
 
         out.println(outputLine);
 
@@ -29,20 +41,15 @@ public class TextResponse implements ResponseController {
         clientSocket.close();
     }
 
-    public static String readFile(String path){
-        StringBuilder textFile = new StringBuilder();
-        try {
-            File file = new File(path);
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String data = scanner.nextLine();
-                textFile.append(data);
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    private String getMimeType(){
+        switch (fileType){
+            case "js":
+                return "text/javascript";
+            case "css":
+                return "text/css";
+            case "html":
+                return "text/html";
         }
-        return textFile.toString();
+        return "";
     }
-
 }

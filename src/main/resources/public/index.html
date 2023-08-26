@@ -5,25 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="./favicon.png">
     <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,100;0,300;0,500;0,700;0,900;1,100&display=swap" rel="stylesheet">
     <title>Lab2-AREP</title>
 </head>
 <body>
-    <div>
-        <h1>Bienvenido a mi fantabulosa pagina de AREP</h1>
-        <p>La pagina puede devolver fotos :D</p>
-        <p>A continuacion una foto de uno de los mejores anime que he visto, y tu tambien deberias: </p>
-        <img src="./demonSlayer.jpeg" alt="No sirvio el response D:">
-        <p>Y mantiene su sección interactiva del taller pasado usando el código del lab anterior pero ahora usando archivos js, css y html 🥵</p>
+    <div class="intro-section">
+        <div>
+            <h1>Bienvenido a mi fantabulosa pagina de AREP</h1>
+            <p>La pagina puede devolver fotos :D</p>
+            <p>A continuacion una foto de uno de los mejores anime que he visto, y tu tambien deberias: </p>
+            <p>Y mantiene su sección interactiva del taller pasado usando el código del lab anterior pero ahora usando archivos js, css y html 🥵</p>
+        </div>
     </div>
-    <hr>
-    <div>
-        <h1>Movie Searcher</h1>
-        <form>
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name" value="It"><br><br>
-            <input type="button" value="Submit" onclick="getWithFetch()">
-        </form> 
-        <div id="getrespmsg" class="display-none"></div>
+    
+    <div class="search-section">
+        <div class="form-container">
+            <h2>Movie Searcher</h2>
+            <form>
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" value="It"><br><br>
+                <input type="button" value="Submit" onclick="getWithFetch()">
+            </form> 
+        </div>
+        <div id="getrespmsg" class="response-container"></div>
     </div>
     <script src="./app.js"></script>
 </body>

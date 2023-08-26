@@ -1,7 +1,97 @@
 body {
-    background-color: bisque;
+    margin: 0;
 }
-
-#display-none {
-    display: none;
+.intro-section{
+    position: relative;
+    min-height: 100vh;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: url("./demonSlayer.png");
+    background-size: cover;
+    background-position: top;
+}
+.intro-section > *{
+    position: relative;
+}
+.intro-section > div{
+    padding: 2rem;
+    max-width: 600px;
+    backdrop-filter: blur(5px);
+}
+.intro-section p{
+    margin: 0;
+    padding-block: 1rem;
+    font-size: 1.5rem;
+    font-weight: 100;
+}
+h1{
+    margin: 0;
+    padding-block: 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 6rem;
+}
+.search-section{
+    min-height: 50vh;
+    color: white;
+    background-color: rgb(12, 12, 12);
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-container{
+    padding: 3rem;
+}
+.response-container{
+    flex-grow: 1;
+}
+.response-container div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(6, 1fr);
+    padding: 3rem;
+    max-height: 450px;
+}
+.response-container div h2,
+.response-container div h3,
+.response-container div p:nth-child(3),
+.response-container div p:nth-child(4),
+.response-container div p:nth-child(5),
+.response-container div p:nth-child(7){
+    grid-column-start: 1;
+    grid-column-end: 2;
+    padding-right: 2rem;
+}
+.response-container div img{
+    grid-column-start: 2;
+    grid-row-start: 1;
+    grid-row-end: 6;
+}
+.response-container div h2{
+    font-size: 3rem;
+}
+.form-container input[type= "text"]{
+    border: 1px solid white;
+    outline: none;
+    color: white;
+    background-color: transparent;
+    width: -webkit-fill-available;
+    padding: 1rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+.form-container input[type= "button"]{
+    width: 100%;
+    border: none;
+    font-size: 1rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 1s;
+}
+.form-container input[type= "button"]:hover{
+    /* outline: 1px solid rgb(0, 255, 221); */
+    background-color: rgb(0, 255, 221);;
 }

@@ -1,6 +1,6 @@
-# Taller 1 AREP - Daniel Sebastian Ochoa Urrego
+# Taller 2 AREP - Daniel Sebastian Ochoa Urrego
 
-Este proyecto es un servidor web de consulta de películas. En él se uso un API externa www.omdbapi.com de donde sacamos toda la información y una implementación básica de Cache junto con un servidor que maneja a muy bajo nivel las conexiones hacia él y las peticiones del cliente.
+Este taller se basa en mejorar el taller anterior, ahora retornamos los pedidos al servidor leyendo los archivos guardados en él. El servidor es capaz de retornar archivos html, js, css, jpg, jpeg y png; ademas de poder acer ciertos pedidos REST a nuestro Backend de modo que ahora podremos crear una pagina mas robusta como veremos a continuación
 
 ## Iniciando
 
@@ -23,7 +23,7 @@ Si aún no tienes instaladas estas tecnologias, los siguientes tutoriales te pue
 Para hacer una copia local del proyecto, debes abrir tu terminal, dirigirte al directorio donde quieras que este el proyecto y usar el siguiente comando
 
 ```
-git clone https://github.com/DanielOchoa1214/Lab1-AREP.git
+git clone https://github.com/DanielOchoa1214/Lab2-AREP.git
 ```
 
 Luego muevete al directorio creado y desde ahi ejecuta este comando

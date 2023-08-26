@@ -32,11 +32,13 @@ Luego muevete al directorio creado y desde ahi ejecuta este comando
 mvn exec:java
 ```
 
-Ya que la aplicacián haya iniciado, puedes dirigirte a tu navegador de preferencia y entrar en http://localhost:35000 para ver la app corriendo, en ella encontraras una barra de busqueda y un botón. Si quieres buscar una película solo debes poner el título en la barra y darle click al botón (Nota: el hacer enter no funcionará, solo recargaras la pagina)
+Ya que la aplicación haya iniciado, puedes dirigirte a tu navegador de preferencia y entrar en http://localhost:35000 para ver la app corriendo, en ella encontraras una muy bonita pagina que cree con mucho esfuerzo donde puedes ver algun texto con una imagen de un anime genial y mas abajo el nuevo y mejorado buscador de peliculas del taller anterior
 
-<img width="1680" alt="Ejemplo busqueda" src="https://github.com/DanielOchoa1214/Lab1-AREP/assets/77862016/9be37034-82fa-4650-a3c4-34dd8dda9b81">
+#PONER IMAGEN 
 
 ## Corriendo los tests
+
+### Test unitarios
 
 Para correr los tests unitarios creados debes entrar al directorio del proyecto (Al clonarlo probablemente sea llamado "Lab1-AREP") y correr el siguiente comando 
 
@@ -47,6 +49,12 @@ mvn test
 Y si tanto tu como yo hicimos todo bien, los test deberian correr y ser exitosos. 
 
 Ahora, el proyecto tiene 2 tests, el primero es una prueba simple donde vemos que la API fachada si sea capaz de traer información correcta dado el titulo de una película, y el segundo prueba que nuestra app sea resistente a pedidos concurrentes chequeando que el cache se mantenga consistente a travez de estos pedidos.
+
+### Test de integración
+
+Para poder ver el correcto funcionamiento de las nuevas funcionalidades creadas en la pagina debemos correr el proyecto, ya que no podemos probar que un archivo sea leido correctamente desde Java, ya que al hacerlo tendriamos que usar el mismo código que usamos para leerlo, por lo que no tiene mico sentido comparar un codigo con si mismo para verificar que funciona.
+
+Ahora para asegurarnos que todo funciona en la aplicación corriendo solo debemos entrar al servidor desde el navegador (http://localhost:35000) y verificar que podamos ver correctamente la pagina, tanto como la imagen como el estilo y la estructura de la pagina. Además mas abajo podremos probar el buscador de peliculas y si todo funciona correctamente podremos ver el resultado de la busqueda. 
 
 ## Documentacion
 
@@ -66,7 +74,7 @@ Y en la siguiente ruta encontrarás el archivo index.html en donde si lo abres d
 
 * Amor
 * [Maven](https://maven.apache.org/) - Administrador de dependencias
-* [OMDAPI](https://www.omdbapi.com) - API externa de consulta
+* [IntelliJ IDEA](https://www.jetbrains.com/es-es/idea/) - IDE de desarrollo
 
 ## Version
 
@@ -87,6 +95,13 @@ En la aplicación separamos las clases de manera lógica usando los paquetes par
 * Web Client - Para separar lógicamente el cliente web creamos un paquete "webclient" donde tenemos la clase HttpServer, la cual es la encargada de administrar las peticiones del cliente y enviarle las respuestas a travez de los Sockets.
 * Web Server Facade - Ahora, para este componente se creo el paquete "apifacade" en donde tenemos las clases HttpConnection y Cache, las cuales en conjunto son las escargadas de consultar la información de la película buscada, ya sea haciendo una petición a la API esterna o con la información guardada en cache.
 * Concurrent Java Test Client - Para este componente usamos la estructura por defecto que Maven nos provee para hacer tests, por lo que si navegamos hasta el final de la carpeta test del proyecto podremos encontrar la clase de prueba de la fachada en donde probramos la correctitud de la información buscada por la API externa y la resistencia a la concurrencia del cache.
+
+### Arquitectura
+
+Como se especificó anteriormente a grandes razgos creamos la arquitectura separando logicamente los componentes en paquetes, y en este laboratorio se mantuvo ese patrón, por lo que para ser capaces de enviar respuestas leyendo archivos se crearon los siguientes paquetes dentro del Web Client:
+
+* File Handlers - Para este componente creamos el paquete "filehandlers" para poder responder acordemente a las peticiones hechas por el cliente encargado de leer los archivos que se le pida y devolverlos, ya sean archivos de texto, imagenes o mensajes de error.
+* REST Handler - Para este componente creamos el paquete "resthandler" que es el encargado de enrutar con nuestro "Backend" (que seria la fachada) las peticiones REST que se le hagan a nuestro servidor, en este caso la busqueda de peliculas.
 
 ### Extencibilidad
 

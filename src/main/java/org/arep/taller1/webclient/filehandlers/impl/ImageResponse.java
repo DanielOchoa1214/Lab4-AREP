@@ -12,16 +12,31 @@ import java.net.Socket;
 import java.net.URI;
 import java.nio.ByteBuffer;
 
+/**
+ * Class in charge of responding with an image through a byte stream
+ * @author Daniel Ochoa
+ */
 public class ImageResponse implements ResponseInterface {
     private Socket clientSocket;
     private String fileType;
     private URI filePath;
 
+    /**
+     * Constructor of the ImageResponse Class
+     * @param clientSocket Socket where the server established communication with the client
+     * @param fileType Type of file the client solicited
+     * @param filePath Path to the file solicited
+     */
     public ImageResponse(Socket clientSocket, String fileType, URI filePath){
         this.clientSocket = clientSocket;
         this.fileType = fileType;
         this.filePath = filePath;
     }
+
+    /**
+     * Method that responds to an image file request
+     * @throws IOException In case something goes wrong during the streaming of the response
+     */
     @Override
     public void sendResponse() throws IOException {
         OutputStream out = clientSocket.getOutputStream();
@@ -39,6 +54,9 @@ public class ImageResponse implements ResponseInterface {
         clientSocket.close();
     }
 
+    /*
+    Method the returns the header, made to simplify the creation of the response
+     */
     private String header(){
         return "HTTP/1.1 200 OK \r\n" +
                 "Content-Type: image/" + fileType + " \r\n" +

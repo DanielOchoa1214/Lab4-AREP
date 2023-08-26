@@ -1,7 +1,5 @@
 package org.arep.taller1.webclient;
 
-import org.arep.taller1.apifacade.HttpConnection;
-
 import java.net.*;
 import java.io.*;
 import java.util.Arrays;
@@ -12,7 +10,6 @@ import org.arep.taller1.webclient.filehandlers.impl.ErrorResponse;
 import org.arep.taller1.webclient.filehandlers.impl.ImageResponse;
 import org.arep.taller1.webclient.filehandlers.impl.TextResponse;
 import org.arep.taller1.webclient.resthandler.RestResponse;
-import org.json.*;
 
 /**
  * Web Client, this class is responsable for the creation a Socket between the client and the server and delivering any
@@ -61,7 +58,7 @@ public class HttpServer {
             System.out.println("Received: " + inputLine);
 
             if(resourcePath.getQuery() != null){
-                RestResponse.sendRestResponse(clientSocket, resourcePath);
+                RestResponse.getMovieResponse(clientSocket, resourcePath);
             } else {
                 sendResponse(resourcePath, clientSocket);
             }
@@ -71,6 +68,9 @@ public class HttpServer {
         serverSocket.close();
     }
 
+    /*
+    Method in charge of sending the apropiate response based on what the resource request is
+     */
     private static void sendResponse(URI resourcePath, Socket clientSocket) throws IOException, URISyntaxException {
         char lastChar = resourcePath.getPath().charAt(resourcePath.getPath().length() - 1);
         String fileType = getFileType(resourcePath);
@@ -88,24 +88,36 @@ public class HttpServer {
         responseInterface.sendResponse();
     }
 
+    /*
+    Method in charge of detecting what is the type of file the client is requesting
+     */
     private static String getFileType(URI path){
         String fileFormat = "";
         try {
             fileFormat = path.getPath().split("\\.")[1];
-        } catch (ArrayIndexOutOfBoundsException e){}
+        } catch (ArrayIndexOutOfBoundsException ignored){}
         return fileFormat;
     }
 
+    /*
+    Method that checks if the file requested can be send in a plain text stream
+     */
     private static boolean isText(URI path){
         String fileFormat = path.getPath().split("\\.")[1];
         return supportedTextFormats.contains(fileFormat);
     }
 
+    /*
+    Method that checks if the file requested is an image and should de send using a byte stream
+     */
     private static boolean isImage(URI path){
         String fileFormat = path.getPath().split("\\.")[1];
         return supportedImgFormats.contains(fileFormat);
     }
 
+    /*
+    Method that checks if the file requested exists
+     */
     private static boolean fileExists(URI path) {
         File file = new File(System.getProperty("user.dir") + path);
         return file.exists();

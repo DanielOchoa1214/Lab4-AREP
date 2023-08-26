@@ -8,9 +8,19 @@ import java.net.Socket;
 import java.net.URI;
 import java.net.URLDecoder;
 
+/**
+ * Class in charge of handling REST requests to the back end (Controller)
+ * @author Daniel Ochoa
+ */
 public class RestResponse {
 
-    public static void sendRestResponse(Socket clientSocket, URI path) throws IOException {
+    /**
+     * Method in charge of sending the response to the client when he searches a movie
+     * @param clientSocket Socket where the server established communication with the client
+     * @param path URI containing the GET request
+     * @throws IOException Exception is throne in case the Backend method fails
+     */
+    public static void getMovieResponse(Socket clientSocket, URI path) throws IOException {
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         String outputLine;
 

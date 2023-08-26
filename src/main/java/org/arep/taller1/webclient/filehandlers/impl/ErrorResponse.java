@@ -6,13 +6,26 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Class in charge of responding with the default error page
+ * @author Daniel Ochoa
+ */
 public class ErrorResponse implements ResponseInterface {
 
     private Socket clientSocket;
 
+    /**
+     * Constructor of the ErrorResponse class
+     * @param clientSocket
+     */
     public ErrorResponse(Socket clientSocket){
         this.clientSocket = clientSocket;
     }
+
+    /**
+     * Method that responds to an incorrect or not valid request to the server
+     * @throws IOException In case something goes wrong during the streaming of the response
+     */
     @Override
     public void sendResponse() throws IOException {
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);

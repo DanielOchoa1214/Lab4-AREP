@@ -34,7 +34,9 @@ mvn exec:java
 
 Ya que la aplicación haya iniciado, puedes dirigirte a tu navegador de preferencia y entrar en http://localhost:35000 para ver la app corriendo, en ella encontraras una muy bonita página que cree con mucho esfuerzo donde puedes ver algún texto con una imagen de un anime genial y más abajo el nuevo y mejorado buscador de películas del taller anterior
 
-#PONER IMAGEN 
+<img width="1680" alt="Screenshot 2023-08-26 at 2 19 33 PM" src="https://github.com/DanielOchoa1214/Lab2-AREP/assets/77862016/f4097a88-84cf-481c-8359-80e305df0c80">
+<img width="1680" alt="Screenshot 2023-08-26 at 2 19 40 PM" src="https://github.com/DanielOchoa1214/Lab2-AREP/assets/77862016/8160b964-e070-46ef-bce8-e9b91e979726">
+
 
 ## Corriendo los tests
 

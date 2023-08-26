@@ -1,6 +1,6 @@
 # Taller 2 AREP - Daniel Sebastian Ochoa Urrego
 
-Este taller se basa en mejorar el taller anterior, ahora retornamos los pedidos al servidor leyendo los archivos guardados en él. El servidor es capaz de retornar archivos html, js, css, jpg, jpeg y png; ademas de poder acer ciertos pedidos REST a nuestro Backend de modo que ahora podremos crear una pagina mas robusta como veremos a continuación
+Este taller se basa en mejorar el taller anterior, ahora retornamos los pedidos al servidor leyendo los archivos guardados en él. El servidor es capaz de retornar archivos HTML, JS, CSS, JPG, JPEG y PNG; además de poder hacer ciertos pedidos REST a nuestro Backend de modo que ahora podremos crear una página más robusta como veremos a continuación
 
 ## Iniciando
 
@@ -32,7 +32,7 @@ Luego muevete al directorio creado y desde ahi ejecuta este comando
 mvn exec:java
 ```
 
-Ya que la aplicación haya iniciado, puedes dirigirte a tu navegador de preferencia y entrar en http://localhost:35000 para ver la app corriendo, en ella encontraras una muy bonita pagina que cree con mucho esfuerzo donde puedes ver algun texto con una imagen de un anime genial y mas abajo el nuevo y mejorado buscador de peliculas del taller anterior
+Ya que la aplicación haya iniciado, puedes dirigirte a tu navegador de preferencia y entrar en http://localhost:35000 para ver la app corriendo, en ella encontraras una muy bonita página que cree con mucho esfuerzo donde puedes ver algún texto con una imagen de un anime genial y más abajo el nuevo y mejorado buscador de películas del taller anterior
 
 #PONER IMAGEN 
 
@@ -52,9 +52,9 @@ Ahora, el proyecto tiene 2 tests, el primero es una prueba simple donde vemos qu
 
 ### Test de integración
 
-Para poder ver el correcto funcionamiento de las nuevas funcionalidades creadas en la pagina debemos correr el proyecto, ya que no podemos probar que un archivo sea leido correctamente desde Java, ya que al hacerlo tendriamos que usar el mismo código que usamos para leerlo, por lo que no tiene mico sentido comparar un codigo con si mismo para verificar que funciona.
+Para poder ver el correcto funcionamiento de las nuevas funcionalidades creadas en la página debemos correr el proyecto, ya que no podemos probar que un archivo sea leído correctamente desde Java, puesto que al hacerlo tendríamos que usar el mismo código que usamos para leerlo, por lo que no tiene mucho sentido comparar un código consigo mismo para verificar que funciona.
 
-Ahora para asegurarnos que todo funciona en la aplicación corriendo solo debemos entrar al servidor desde el navegador (http://localhost:35000) y verificar que podamos ver correctamente la pagina, tanto como la imagen como el estilo y la estructura de la pagina. Además mas abajo podremos probar el buscador de peliculas y si todo funciona correctamente podremos ver el resultado de la busqueda. 
+Ahora, para asegurarnos que todo funciona en la aplicación corriendo, solo debemos entrar al servidor desde el navegador (http://localhost:35000) y verificar que podamos ver correctamente la página, tanto como la imagen como el estilo y la estructura de la página. Además, más abajo podremos probar el buscador de películas y si todo funciona correctamente podremos ver el resultado de la búsqueda. 
 
 ## Documentacion
 
@@ -98,10 +98,10 @@ En la aplicación separamos las clases de manera lógica usando los paquetes par
 
 ### Arquitectura
 
-Como se especificó anteriormente a grandes razgos creamos la arquitectura separando logicamente los componentes en paquetes, y en este laboratorio se mantuvo ese patrón, por lo que para ser capaces de enviar respuestas leyendo archivos se crearon los siguientes paquetes dentro del Web Client:
+Como se especificó anteriormente, a grandes rasgos creamos la arquitectura separando lógicamente los componentes en paquetes, y en este laboratorio se mantuvo ese patrón, por lo que para ser capaces de enviar respuestas leyendo archivos se crearon los siguientes paquetes dentro del Web Client:
 
-* File Handlers - Para este componente creamos el paquete "filehandlers" para poder responder acordemente a las peticiones hechas por el cliente encargado de leer los archivos que se le pida y devolverlos, ya sean archivos de texto, imagenes o mensajes de error.
-* REST Handler - Para este componente creamos el paquete "resthandler" que es el encargado de enrutar con nuestro "Backend" (que seria la fachada) las peticiones REST que se le hagan a nuestro servidor, en este caso la busqueda de peliculas.
+* File Handlers - Para este componente creamos el paquete "filehandlers" para poder responder acordemente a las peticiones hechas por el cliente encargado de leer los archivos que se le pida y devolverlos, ya sean archivos de texto, imágenes o mensajes de error.
+* REST Handler - Para este componente creamos el paquete "resthandler" que es el encargado de enrutar con nuestro "Backend" (que sería la fachada) las peticiones REST que se le hagan a nuestro servidor, en este caso la búsqueda de películas.
 
 ### Extencibilidad
 

@@ -11,6 +11,7 @@ import org.arep.taller1.webclient.filehandlers.ResponseInterface;
 import org.arep.taller1.webclient.filehandlers.impl.ErrorResponse;
 import org.arep.taller1.webclient.filehandlers.impl.ImageResponse;
 import org.arep.taller1.webclient.filehandlers.impl.TextResponse;
+import org.arep.taller1.webclient.resthandler.RestResponse;
 import org.json.*;
 
 /**
@@ -23,7 +24,7 @@ public class HttpServer {
 
     private static ResponseInterface responseInterface;
 
-    private static final List<String> supportedImgFormats = Arrays.asList("jpg", "png", "ico");
+    private static final List<String> supportedImgFormats = Arrays.asList("jpg", "png", "jpeg");
 
     private static final List<String> supportedTextFormats = Arrays.asList("html", "css", "js");
 
@@ -58,7 +59,12 @@ public class HttpServer {
             String path = inputLine.split(" ")[1];
             URI resourcePath = new URI("/target/classes/public" + path);
             System.out.println("Received: " + inputLine);
-            sendResponse(resourcePath, clientSocket);
+
+            if(resourcePath.getQuery() != null){
+                RestResponse.sendRestResponse(clientSocket, resourcePath);
+            } else {
+                sendResponse(resourcePath, clientSocket);
+            }
 
             in.close();
         }
@@ -103,71 +109,5 @@ public class HttpServer {
     private static boolean fileExists(URI path) {
         File file = new File(System.getProperty("user.dir") + path);
         return file.exists();
-    }
-
-    /*
-    Method that builds the response when searching a movie
-     */
-    private static String getMovie(String path) throws IOException {
-        System.out.println(path);
-        return "Content-Type: text/json \r\n"
-                + "\r\n"
-                + movieDisplay(path);
-    }
-
-    /*
-    Method that creates the visuals displaying the movie info
-     */
-    private static String movieDisplay(String path) throws IOException {
-        String response = HttpConnection.getMovie(path.split("=")[1]);
-        JSONObject object = new JSONObject(response);
-        return "<div>" +
-                "<h2>"+ object.get("Title") + "</h2>" +
-                "<h3>"+ object.get("Year") + "</h3>" +
-                "<p> Director: " + object.get("Director") + "</p>" +
-                "<p> Genre: " + object.get("Genre") + "</p>" +
-                "<p> Rating: " + object.get("Rated") + "</p>" +
-                "<img src=\"" + object.get("Poster") + "\"/>" +
-                "<p>" + object.get("Plot") + "</p>" +
-                "</div>\n";
-    }
-
-    /*
-    Method that return the main index of the web page
-     */
-    private static String getIndex(){
-        return "Content-Type: text/html \r\n" +
-                "\r\n <!DOCTYPE html>\n" +
-                "<html>\n" +
-                "    <head>\n" +
-                "        <title>Movie searcher</title>\n" +
-                "        <meta charset=\"UTF-8\">\n" +
-                "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                "    </head>\n" +
-                "    <body>\n" +
-                "        <h1>Movie searcher</h1>\n" +
-                "        <form action=\"/hello\">\n" +
-                "            <label for=\"name\">Name:</label><br>\n" +
-                "            <input type=\"text\" id=\"name\" name=\"name\" value=\"John\"><br><br>\n" +
-                "            <input type=\"button\" value=\"Search\" onclick=\"loadGetMsg()\">\n" +
-                "        </form> \n" +
-                "        <hr>" +
-                "        <div id=\"getrespmsg\"></div>\n" +
-                "\n" +
-                "        <script>\n" +
-                "            function loadGetMsg() {\n" +
-                "                let nameVar = document.getElementById(\"name\").value;\n" +
-                "                const xhttp = new XMLHttpRequest();\n" +
-                "                xhttp.onload = function() {\n" +
-                "                    document.getElementById(\"getrespmsg\").innerHTML =\n" +
-                "                    this.responseText;\n" +
-                "                }\n" +
-                "                xhttp.open(\"GET\", \"/movie?name=\"+nameVar);\n" +
-                "                xhttp.send();\n" +
-                "            }\n" +
-                "        </script>\n" +
-                "\n" +
-                "    </body>\n" +
-                "</html>";
     }
 }

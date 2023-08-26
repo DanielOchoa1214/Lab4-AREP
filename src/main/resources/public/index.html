@@ -4,10 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="./favicon.png">
+    <link rel="stylesheet" href="./style.css">
     <title>Lab2-AREP</title>
 </head>
 <body>
-    <h1>Bienvenido a mi fantabulosa pagina de AREP</h1>
-    
+    <div>
+        <h1>Bienvenido a mi fantabulosa pagina de AREP</h1>
+        <p>La pagina puede devolver fotos :D</p>
+        <p>A continuacion una foto de uno de los mejores anime que he visto, y tu tambien deberias: </p>
+        <img src="./demonSlayer.jpeg" alt="No sirvio el response D:">
+        <p>Y mantiene su sección interactiva del taller pasado usando el código del lab anterior pero ahora usando archivos js, css y html 🥵</p>
+    </div>
+    <hr>
+    <div>
+        <h1>Movie Searcher</h1>
+        <form>
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" value="It"><br><br>
+            <input type="button" value="Submit" onclick="getWithFetch()">
+        </form> 
+        <div id="getrespmsg" class="display-none"></div>
+    </div>
+    <script src="./app.js"></script>
 </body>
 </html>

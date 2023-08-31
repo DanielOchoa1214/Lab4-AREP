@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
+import org.arep.taller1.minispark.MiniSpark;
 import org.arep.taller1.webclient.filehandlers.ResponseInterface;
 import org.arep.taller1.webclient.filehandlers.impl.ErrorResponse;
 import org.arep.taller1.webclient.filehandlers.impl.ImageResponse;
@@ -30,7 +31,7 @@ public class HttpServer {
      * @param args Default arguments needed to make a main method
      * @throws IOException Exception is thrown if something goes wrong during the handling if the connections
      */
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void start() throws IOException, URISyntaxException {
 
         ServerSocket serverSocket = null;
         try {
@@ -54,18 +55,27 @@ public class HttpServer {
 
             String inputLine = in.readLine();
             String path = inputLine.split(" ")[1];
+            URI restPath = new URI(path);
             URI resourcePath = new URI("/target/classes/public" + path);
             System.out.println("Received: " + inputLine);
 
-            if(resourcePath.getQuery() != null){
-                RestResponse.getMovieResponse(clientSocket, resourcePath);
-            } else {
+            if(MiniSpark.search(restPath.getPath()) != null){
+                String response = MiniSpark.search(restPath.getPath()).handle(restPath.getQuery());
+                RestResponse.sendResponse(clientSocket, response);
+            } else if (fileExists(resourcePath)){
                 sendResponse(resourcePath, clientSocket);
+            } else {
+                sendError(resourcePath, clientSocket);
             }
 
             in.close();
         }
         serverSocket.close();
+    }
+
+    private static void sendError(URI resourcePath, Socket clientSocket) throws IOException {
+        responseInterface = new ErrorResponse(clientSocket);
+        responseInterface.sendResponse();
     }
 
     /*

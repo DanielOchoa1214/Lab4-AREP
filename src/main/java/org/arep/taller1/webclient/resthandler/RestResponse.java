@@ -14,23 +14,15 @@ import java.net.URLDecoder;
  */
 public class RestResponse {
 
-    /**
-     * Method in charge of sending the response to the client when he searches a movie
-     * @param clientSocket Socket where the server established communication with the client
-     * @param path URI containing the GET request
-     * @throws IOException Exception is throne in case the Backend method fails
-     */
-    public static void getMovieResponse(Socket clientSocket, URI path) throws IOException {
+    public static void sendResponse(Socket clientSocket, String response) throws IOException {
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         String outputLine;
 
-        System.out.println(path);
-        String movieTitle = URLDecoder.decode(path.getQuery().split("=")[1]);
 
         outputLine = "HTTP/1.1 200 OK \r\n" +
                 "Content-Type: application/json \r\n" +
                 "\r\n";
-        outputLine += HttpConnection.getMovie(movieTitle);
+        outputLine += response;
 
         out.println(outputLine);
 

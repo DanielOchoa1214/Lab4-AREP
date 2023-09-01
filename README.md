@@ -1,6 +1,6 @@
 # Taller 3 AREP - Daniel Sebastian Ochoa Urrego
 
-En este taller mejoramos el servidor creado anteriormente de manera que podamos ofrecer la creacion de servicios REST de manera sencilla para desarrolladores, simulando el microframework [SparkJava](https://sparkjava.com/)
+En este taller mejoramos el servidor creado anteriormente, de manera que podamos ofrecer la creación de servicios REST de manera sencilla para desarrolladores, simulando el microframework [SparkJava](https://sparkjava.com/)
 
 ## Iniciando
 
@@ -53,17 +53,17 @@ Ahora, el proyecto tiene 2 tests, el primero es una prueba simple donde vemos qu
 
 ### Test de integración
 
-Para probar que el desarrollo de nuestro MiniSpark estubiera correcto se creo la siguiente clase donde hacemos la creacion de los servicios REST 
+Para probar que el desarrollo de nuestro MiniSpark estuviera correcto se creyó la siguiente clase donde hacemos la creación de los servicios REST 
 
 <img width="644" alt="Screenshot 2023-09-01 at 4 38 44 PM" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/24714541-cc99-4565-8c72-e1ec03bca348">
 
-En ella, similar a Spark, creamos con la funcion get() un metodo que respondera a peticiones GET hechas a travez de la ruta /hello, y de igual manera peticiones POST por el mismo endpoint
+En ella, similar a Spark, creamos con la función get() un método que responderá a peticiones GET hechas a través de la ruta /hello, y de igual manera peticiones POST por el mismo endpoint
 
-Y para probar su correcto funcionamiento a la pagina FrontEnd agregamos un nuevo formulario donde mandaramos la informacion de la pelicula a travez del body de un POST.
+Y para probar su correcto funcionamiento a la página FrontEnd agregamos un nuevo formulario donde mandáremos la información de la película a través del body de un POST
 
 <img width="1296" alt="Screenshot 2023-09-01 at 4 43 02 PM" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/f92fcc52-eea0-4091-8e3a-2cbe7c7d171b">
 
-Y si queremos verificar mas podremos revisar en el log de la aplicacion que se hayan enviado los request con el verbo apropiado
+Y si queremos verificar más podremos revisar en el log de la aplicación que se hayan enviado los request con el verbo apropiado
 
 <img width="305" alt="Screenshot 2023-09-01 at 4 44 20 PM" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/8d5500f9-def7-42b9-8d8c-e5fa12d8e986">
 
@@ -113,6 +113,7 @@ Como se especificó anteriormente, a grandes rasgos creamos la arquitectura sepa
 
 * File Handlers - Para este componente creamos el paquete "filehandlers" para poder responder acordemente a las peticiones hechas por el cliente encargado de leer los archivos que se le pida y devolverlos, ya sean archivos de texto, imágenes o mensajes de error.
 * REST Handler - Para este componente creamos el paquete "resthandler" que es el encargado de enrutar con nuestro "Backend" (que sería la fachada) las peticiones REST que se le hagan a nuestro servidor, en este caso la búsqueda de películas.
+* MiniSpark - Para este componente creamos el paquete "minispark" donde dejamos toda la lógica necesaria para guardar funcionalidades en el código para luego buscarlas y correrlas cuando sea necesario
 
 ### Extencibilidad
 

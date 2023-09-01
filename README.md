@@ -36,13 +36,12 @@ Ya que la aplicación haya iniciado, puedes dirigirte a tu navegador de preferen
 
 <img width="1680" alt="SAPO" src="https://github.com/DanielOchoa1214/Lab2-AREP/assets/77862016/f4097a88-84cf-481c-8359-80e305df0c80">
 <img width="1680" alt="PERRO" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/4a0bf8d6-34da-45b3-bd53-3ec9a29c0fa6">
-![Screenshot 2023-09-01 120650](https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/4a0bf8d6-34da-45b3-bd53-3ec9a29c0fa6)
 
 ## Corriendo los tests
 
 ### Test unitarios
 
-Para correr los tests unitarios creados debes entrar al directorio del proyecto (Al clonarlo probablemente sea llamado "Lab1-AREP") y correr el siguiente comando 
+Para correr los tests unitarios creados debes entrar al directorio del proyecto (Al clonarlo probablemente sea llamado "Lab3_AREP") y correr el siguiente comando 
 
 ```
 mvn test

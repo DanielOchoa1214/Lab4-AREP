@@ -1,6 +1,6 @@
-# Taller 2 AREP - Daniel Sebastian Ochoa Urrego
+# Taller 3 AREP - Daniel Sebastian Ochoa Urrego
 
-Este taller se basa en mejorar el taller anterior, ahora retornamos los pedidos al servidor leyendo los archivos guardados en él. El servidor es capaz de retornar archivos HTML, JS, CSS, JPG, JPEG y PNG; además de poder hacer ciertos pedidos REST a nuestro Backend de modo que ahora podremos crear una página más robusta como veremos a continuación
+En este taller mejoramos el servidor creado anteriormente de manera que podamos ofrecer la creacion de servicios REST de manera sencilla para desarrolladores, simulando el microframework [SparkJava]([https://maven.apache.org/](https://sparkjava.com/))
 
 ## Iniciando
 

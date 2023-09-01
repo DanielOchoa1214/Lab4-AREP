@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.arep.taller1.minispark.MiniSpark;
+import org.arep.taller1.minispark.Request;
+import org.arep.taller1.minispark.Response;
+import org.arep.taller1.minispark.Service;
 import org.arep.taller1.webclient.filehandlers.ResponseInterface;
 import org.arep.taller1.webclient.filehandlers.impl.ErrorResponse;
 import org.arep.taller1.webclient.filehandlers.impl.ImageResponse;
@@ -28,7 +31,6 @@ public class HttpServer {
 
     /**
      * This method initiates the server, accepts and administrate client connections and handles the request of the client
-     * @param args Default arguments needed to make a main method
      * @throws IOException Exception is thrown if something goes wrong during the handling if the connections
      */
     public static void start() throws IOException, URISyntaxException {
@@ -54,13 +56,23 @@ public class HttpServer {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             String inputLine = in.readLine();
+            String method = inputLine.split(" ")[0];
             String path = inputLine.split(" ")[1];
             URI restPath = new URI(path);
             URI resourcePath = new URI("/target/classes/public" + path);
             System.out.println("Received: " + inputLine);
 
-            if(MiniSpark.search(restPath.getPath()) != null){
-                String response = MiniSpark.search(restPath.getPath()).handle(restPath.getQuery());
+            StringBuilder rawRequest = new StringBuilder();
+            rawRequest.append(inputLine);
+            while (in.ready()) {
+                rawRequest.append((char) in.read());
+            }
+
+            Service service = MiniSpark.search(restPath.getPath(), method);
+            if(service != null){
+                Request req = new Request(rawRequest.toString());
+                Response res = new Response();
+                String response = service.handle(req, res);
                 RestResponse.sendResponse(clientSocket, response);
             } else if (fileExists(resourcePath)){
                 sendResponse(resourcePath, clientSocket);
@@ -69,6 +81,7 @@ public class HttpServer {
             }
 
             in.close();
+
         }
         serverSocket.close();
     }

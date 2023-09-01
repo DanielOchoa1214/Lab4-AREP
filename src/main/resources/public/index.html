@@ -25,11 +25,22 @@
             <h2>Movie Searcher</h2>
             <form>
                 <label for="name">Name:</label><br>
-                <input type="text" id="name" name="name" value="It"><br><br>
+                <input type="text" id="get-name" name="name" value="It"><br><br>
                 <input type="button" value="Submit" onclick="getWithFetch()">
             </form> 
         </div>
         <div id="getrespmsg" class="response-container"></div>
+    </div>
+    <div class="search-section">
+        <div class="form-container">
+            <h2>Movie Searcher</h2>
+            <form>
+                <label for="name">Name:</label><br>
+                <input type="text" id="post-name" name="name" value="It"><br><br>
+                <input type="button" value="Submit" onclick="postWithFetch()">
+            </form> 
+        </div>
+        <div id="postrespmsg" class="response-container"></div>
     </div>
     <script src="./app.js"></script>
 </body>

@@ -1,6 +1,7 @@
 package org.arep.taller1.restclient;
 
 import org.arep.taller1.apifacade.HttpConnection;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -18,8 +19,13 @@ public class RestClientExample {
         });
 
         post("/hello", (req, res) -> {
-            System.out.println(req.getBody());
-            return "";
+            JSONObject body = req.getBody();
+            try {
+                String movieTitle = (String) body.get("name");
+                return HttpConnection.getMovie(movieTitle);
+            } catch (IOException e){
+                return "Movie not found :(";
+            }
         });
 
         start();

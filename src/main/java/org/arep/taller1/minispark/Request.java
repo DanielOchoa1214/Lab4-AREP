@@ -1,12 +1,15 @@
 package org.arep.taller1.minispark;
 
+
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Request {
     private String verb;
-    private String body;
+    private JSONObject body;
     private String path;
     private String query;
 
@@ -15,8 +18,16 @@ public class Request {
         URI uri = new URI(rawRequest.split(" ")[1]);
         this.path = uri.getPath();
         this.query = uri.getQuery();
-        String[] requestLines = rawRequest.split("\n");
-        this.body = requestLines[requestLines.length - 1];
+        buildBody(rawRequest);
+    }
+
+    private void buildBody(String rawRequest){
+        try {
+            String[] requestLines = rawRequest.split("\n");
+            this.body = new JSONObject(requestLines[requestLines.length - 1]);
+        } catch (JSONException e){
+            this.body = null;
+        }
     }
 
     public String getVerb() {
@@ -27,11 +38,11 @@ public class Request {
         this.verb = verb;
     }
 
-    public String getBody() {
+    public JSONObject getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    public void setBody(JSONObject body) {
         this.body = body;
     }
 

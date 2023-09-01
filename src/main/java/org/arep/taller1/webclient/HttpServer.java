@@ -2,17 +2,12 @@ package org.arep.taller1.webclient;
 
 import java.net.*;
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
 
 import org.arep.taller1.minispark.MiniSpark;
 import org.arep.taller1.minispark.Request;
 import org.arep.taller1.minispark.Response;
 import org.arep.taller1.minispark.Service;
-import org.arep.taller1.webclient.filehandlers.ResponseInterface;
-import org.arep.taller1.webclient.filehandlers.impl.ErrorResponse;
-import org.arep.taller1.webclient.filehandlers.impl.ImageResponse;
-import org.arep.taller1.webclient.filehandlers.impl.TextResponse;
+import org.arep.taller1.webclient.filehandlers.FileHandler;
 import org.arep.taller1.webclient.resthandler.RestResponse;
 
 /**
@@ -23,18 +18,25 @@ import org.arep.taller1.webclient.resthandler.RestResponse;
  */
 public class HttpServer {
 
-    private static ResponseInterface responseInterface;
-
-    private static final List<String> supportedImgFormats = Arrays.asList("jpg", "png", "jpeg");
-
-    private static final List<String> supportedTextFormats = Arrays.asList("html", "css", "js");
-
     /**
      * This method initiates the server, accepts and administrate client connections and handles the request of the client
      * @throws IOException Exception is thrown if something goes wrong during the handling if the connections
      */
     public static void start() throws IOException, URISyntaxException {
 
+        ServerSocket serverSocket = startServerSocket();
+        while (true) {
+            Socket clientSocket = startClientSocket(serverSocket);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            StringBuilder rawRequest = getRawResponse(in);
+            sendResponse(clientSocket, rawRequest.toString());
+
+            in.close();
+        }
+    }
+
+    private static ServerSocket startServerSocket(){
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(35000);
@@ -42,107 +44,45 @@ public class HttpServer {
             System.err.println("Could not listen on port: 35000.");
             System.exit(1);
         }
-        boolean running = true;
-        while (running) {
-            Socket clientSocket = null;
-            try {
-                System.out.println("Listo para recibir ...");
-                clientSocket = serverSocket.accept();
-            } catch (IOException e) {
-                System.err.println("Accept failed.");
-                System.exit(1);
-            }
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-            String inputLine = in.readLine();
-            String method = inputLine.split(" ")[0];
-            String path = inputLine.split(" ")[1];
-            URI restPath = new URI(path);
-            URI resourcePath = new URI("/target/classes/public" + path);
-            System.out.println("Received: " + inputLine);
-
-            StringBuilder rawRequest = new StringBuilder();
-            rawRequest.append(inputLine);
-            while (in.ready()) {
-                rawRequest.append((char) in.read());
-            }
-
-            Service service = MiniSpark.search(restPath.getPath(), method);
-            if(service != null){
-                Request req = new Request(rawRequest.toString());
-                Response res = new Response();
-                String response = service.handle(req, res);
-                RestResponse.sendResponse(clientSocket, response);
-            } else if (fileExists(resourcePath)){
-                sendResponse(resourcePath, clientSocket);
-            } else {
-                sendError(resourcePath, clientSocket);
-            }
-
-            in.close();
-
-        }
-        serverSocket.close();
+        return serverSocket;
     }
 
-    private static void sendError(URI resourcePath, Socket clientSocket) throws IOException {
-        responseInterface = new ErrorResponse(clientSocket);
-        responseInterface.sendResponse();
-    }
-
-    /*
-    Method in charge of sending the apropiate response based on what the resource request is
-     */
-    private static void sendResponse(URI resourcePath, Socket clientSocket) throws IOException, URISyntaxException {
-        char lastChar = resourcePath.getPath().charAt(resourcePath.getPath().length() - 1);
-        String fileType = getFileType(resourcePath);
-        if (lastChar == '/') {
-            responseInterface = new TextResponse(clientSocket, "html", new URI(resourcePath.getPath() + "/index.html"));
-        } else if (!fileExists(resourcePath)){
-            responseInterface = new ErrorResponse(clientSocket);
-        } else if (isImage(resourcePath)) {
-            responseInterface = new ImageResponse(clientSocket, fileType, resourcePath);
-        } else if (isText(resourcePath)) {
-            responseInterface = new TextResponse(clientSocket, fileType, resourcePath);
-        } else {
-            responseInterface = new ErrorResponse(clientSocket);
-        }
-        responseInterface.sendResponse();
-    }
-
-    /*
-    Method in charge of detecting what is the type of file the client is requesting
-     */
-    private static String getFileType(URI path){
-        String fileFormat = "";
+    private static Socket startClientSocket(ServerSocket serverSocket){
+        Socket clientSocket = null;
         try {
-            fileFormat = path.getPath().split("\\.")[1];
-        } catch (ArrayIndexOutOfBoundsException ignored){}
-        return fileFormat;
+            System.out.println("Listo para recibir ...");
+            clientSocket = serverSocket.accept();
+        } catch (IOException e) {
+            System.err.println("Accept failed.");
+            System.exit(1);
+        }
+        return clientSocket;
     }
 
-    /*
-    Method that checks if the file requested can be send in a plain text stream
-     */
-    private static boolean isText(URI path){
-        String fileFormat = path.getPath().split("\\.")[1];
-        return supportedTextFormats.contains(fileFormat);
+    private static StringBuilder getRawResponse(BufferedReader in) throws IOException {
+        StringBuilder rawRequest = new StringBuilder();
+        rawRequest.append(in.readLine());
+        while (in.ready()) {
+            rawRequest.append((char) in.read());
+        }
+        return rawRequest;
     }
 
-    /*
-    Method that checks if the file requested is an image and should de send using a byte stream
-     */
-    private static boolean isImage(URI path){
-        String fileFormat = path.getPath().split("\\.")[1];
-        return supportedImgFormats.contains(fileFormat);
-    }
+    private static void sendResponse(Socket clientSocket, String rawRequest) throws IOException, URISyntaxException {
+        System.out.println("Received: " + rawRequest.split("\n")[0]);
+        String method = rawRequest.split(" ")[0];
+        String path = rawRequest.split(" ")[1];
+        URI restPath = new URI(path);
+        URI resourcePath = new URI("/target/classes/public" + path);
+        Service service = MiniSpark.search(restPath.getPath(), method);
 
-    /*
-    Method that checks if the file requested exists
-     */
-    private static boolean fileExists(URI path) {
-        File file = new File(System.getProperty("user.dir") + path);
-        return file.exists();
+        if(service != null){
+            Request req = new Request(rawRequest);
+            Response res = new Response();
+            String response = service.handle(req, res);
+            RestResponse.sendResponse(clientSocket, response);
+        } else {
+            FileHandler.sendResponse(resourcePath, clientSocket);
+        }
     }
 }

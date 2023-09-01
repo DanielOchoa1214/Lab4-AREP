@@ -35,7 +35,8 @@ mvn exec:java
 Ya que la aplicación haya iniciado, puedes dirigirte a tu navegador de preferencia y entrar en http://localhost:35000 para ver la app corriendo, en ella encontraras una muy bonita página que cree con mucho esfuerzo donde puedes ver algún texto con una imagen de un anime genial y más abajo el nuevo y mejorado buscador de películas del taller anterior, el cual ahora puede buscar peliculas usando metodos GET o POST
 
 <img width="1680" alt="SAPO" src="https://github.com/DanielOchoa1214/Lab2-AREP/assets/77862016/f4097a88-84cf-481c-8359-80e305df0c80">
-<img width="1680" alt="PERRO" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/8c158224-d4b0-4177-b0a6-0fe2450dc16b">
+<img width="1680" alt="PERRO" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/4a0bf8d6-34da-45b3-bd53-3ec9a29c0fa6">
+![Screenshot 2023-09-01 120650](https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/4a0bf8d6-34da-45b3-bd53-3ec9a29c0fa6)
 
 ## Corriendo los tests
 

@@ -13,6 +13,11 @@ public class Request {
     private String path;
     private String query;
 
+    /**
+     * Contructor of the Request class
+     * @param rawRequest String containing the raw HTTP request made to the server
+     * @throws URISyntaxException This error will never be thrown
+     */
     public Request(String rawRequest) throws URISyntaxException {
         this.verb = rawRequest.split(" ")[0];
         URI uri = new URI(rawRequest.split(" ")[1]);
@@ -21,6 +26,9 @@ public class Request {
         buildBody(rawRequest);
     }
 
+    /*
+    Method that takes the raw request and get the body if it has one
+     */
     private void buildBody(String rawRequest){
         try {
             String[] requestLines = rawRequest.split("\n");
@@ -30,35 +38,36 @@ public class Request {
         }
     }
 
+    /**
+     * Get the verb of the request
+     * @return Verb of the request
+     */
     public String getVerb() {
         return verb;
     }
 
-    public void setVerb(String verb) {
-        this.verb = verb;
-    }
 
+    /**
+     * Get the body of the request
+     * @return Body of the request
+     */
     public JSONObject getBody() {
         return body;
     }
 
-    public void setBody(JSONObject body) {
-        this.body = body;
-    }
-
+    /**
+     * Get the path of the request
+     * @return Path of the request
+     */
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
-
+    /**
+     * Get the query of the request
+     * @return Query of the request
+     */
     public String getQuery() {
         return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
     }
 }

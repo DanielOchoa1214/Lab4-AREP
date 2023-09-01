@@ -19,8 +19,12 @@ public class FileHandler {
 
     private static final List<String> supportedTextFormats = Arrays.asList("html", "css", "js");
 
-    /*
-    Method in charge of sending the apropiate response based on what the resource request is
+    /**
+     *  Method in charge of sending the apropiate file based on what the resource request is
+     * @param resourcePath Path to the resource
+     * @param clientSocket Socket to send the response
+     * @throws IOException Realisticly this error will never be thrown
+     * @throws URISyntaxException Realisticly this error will never be thrown
      */
     public static void sendResponse(URI resourcePath, Socket clientSocket) throws IOException, URISyntaxException {
         String path = resourcePath.getPath();
@@ -75,7 +79,9 @@ public class FileHandler {
         return file.exists();
     }
 
-
+    /*
+    Method that send the error page in case the request cant be responded
+     */
     private static void sendError(URI resourcePath, Socket clientSocket) throws IOException {
         responseInterface = new ErrorResponse(clientSocket);
         responseInterface.sendResponse();

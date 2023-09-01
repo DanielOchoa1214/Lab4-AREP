@@ -16,7 +16,7 @@ public class ErrorResponse implements ResponseInterface {
 
     /**
      * Constructor of the ErrorResponse class
-     * @param clientSocket
+     * @param clientSocket Socket where the server established communication with the client
      */
     public ErrorResponse(Socket clientSocket){
         this.clientSocket = clientSocket;

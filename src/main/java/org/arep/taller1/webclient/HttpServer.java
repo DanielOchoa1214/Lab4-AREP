@@ -5,7 +5,6 @@ import java.io.*;
 
 import org.arep.taller1.minispark.MiniSpark;
 import org.arep.taller1.minispark.Request;
-import org.arep.taller1.minispark.Response;
 import org.arep.taller1.minispark.Service;
 import org.arep.taller1.webclient.filehandlers.FileHandler;
 import org.arep.taller1.webclient.resthandler.RestResponse;
@@ -36,6 +35,9 @@ public class HttpServer {
         }
     }
 
+    /*
+    Method that starts the server in port 35000
+     */
     private static ServerSocket startServerSocket(){
         ServerSocket serverSocket = null;
         try {
@@ -47,6 +49,9 @@ public class HttpServer {
         return serverSocket;
     }
 
+    /*
+    Method that accepts and handles connections to the server socket
+     */
     private static Socket startClientSocket(ServerSocket serverSocket){
         Socket clientSocket = null;
         try {
@@ -59,15 +64,21 @@ public class HttpServer {
         return clientSocket;
     }
 
+    /*
+    Method that reads the request from the buffer and creates a String to use it
+     */
     private static StringBuilder getRawResponse(BufferedReader in) throws IOException {
         StringBuilder rawRequest = new StringBuilder();
-        rawRequest.append(in.readLine());
+        rawRequest.append(in.readLine()).append("\n");
         while (in.ready()) {
             rawRequest.append((char) in.read());
         }
         return rawRequest;
     }
 
+    /*
+    Method that send the appropriate response to the request
+     */
     private static void sendResponse(Socket clientSocket, String rawRequest) throws IOException, URISyntaxException {
         System.out.println("Received: " + rawRequest.split("\n")[0]);
         String method = rawRequest.split(" ")[0];
@@ -78,8 +89,7 @@ public class HttpServer {
 
         if(service != null){
             Request req = new Request(rawRequest);
-            Response res = new Response();
-            String response = service.handle(req, res);
+            String response = service.handle(req);
             RestResponse.sendResponse(clientSocket, response);
         } else {
             FileHandler.sendResponse(resourcePath, clientSocket);

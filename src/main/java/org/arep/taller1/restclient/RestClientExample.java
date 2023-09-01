@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
 import static org.arep.taller1.minispark.MiniSpark.*;
 public class RestClientExample {
     public static void main(String[] args) throws IOException, URISyntaxException {
-        get("/hello", (req, res) -> {
+        get("/hello", (req) -> {
             try {
                 String movieTitle = req.getQuery().split("=")[1];
                 return HttpConnection.getMovie(movieTitle);
@@ -18,7 +18,7 @@ public class RestClientExample {
             }
         });
 
-        post("/hello", (req, res) -> {
+        post("/hello", (req) -> {
             JSONObject body = req.getBody();
             try {
                 String movieTitle = (String) body.get("name");

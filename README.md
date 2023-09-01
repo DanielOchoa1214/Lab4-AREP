@@ -53,9 +53,19 @@ Ahora, el proyecto tiene 2 tests, el primero es una prueba simple donde vemos qu
 
 ### Test de integración
 
-Para poder ver el correcto funcionamiento de las nuevas funcionalidades creadas en la página debemos correr el proyecto, ya que no podemos probar que un archivo sea leído correctamente desde Java, puesto que al hacerlo tendríamos que usar el mismo código que usamos para leerlo, por lo que no tiene mucho sentido comparar un código consigo mismo para verificar que funciona.
+Para probar que el desarrollo de nuestro MiniSpark estubiera correcto se creo la siguiente clase donde hacemos la creacion de los servicios REST 
 
-Ahora, para asegurarnos que todo funciona en la aplicación corriendo, solo debemos entrar al servidor desde el navegador (http://localhost:35000) y verificar que podamos ver correctamente la página, tanto como la imagen como el estilo y la estructura de la página. Además, más abajo podremos probar el buscador de películas y si todo funciona correctamente podremos ver el resultado de la búsqueda. 
+<img width="644" alt="Screenshot 2023-09-01 at 4 38 44 PM" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/24714541-cc99-4565-8c72-e1ec03bca348">
+
+En ella, similar a Spark, creamos con la funcion get() un metodo que respondera a peticiones GET hechas a travez de la ruta /hello, y de igual manera peticiones POST por el mismo endpoint
+
+Y para probar su correcto funcionamiento a la pagina FrontEnd agregamos un nuevo formulario donde mandaramos la informacion de la pelicula a travez del body de un POST.
+
+<img width="1296" alt="Screenshot 2023-09-01 at 4 43 02 PM" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/f92fcc52-eea0-4091-8e3a-2cbe7c7d171b">
+
+Y si queremos verificar mas podremos revisar en el log de la aplicacion que se hayan enviado los request con el verbo apropiado
+
+<img width="305" alt="Screenshot 2023-09-01 at 4 44 20 PM" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/8d5500f9-def7-42b9-8d8c-e5fa12d8e986">
 
 ## Documentacion
 

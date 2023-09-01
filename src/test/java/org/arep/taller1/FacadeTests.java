@@ -2,15 +2,14 @@ package org.arep.taller1;
 
 import org.arep.taller1.apifacade.Cache;
 import org.arep.taller1.apifacade.HttpConnection;
-import org.testng.annotations.Test;
+import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static junit.framework.Assert.assertEquals;
 
 public class FacadeTests {
 

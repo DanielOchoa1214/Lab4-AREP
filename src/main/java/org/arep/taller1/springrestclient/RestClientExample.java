@@ -22,7 +22,7 @@ public class RestClientExample {
         }
     }
 
-    @PostMapping("/helloPost")
+    @PostMapping("/hello")
     public static String postMovie(Request req){
         JSONObject body = req.getBody();
         try {

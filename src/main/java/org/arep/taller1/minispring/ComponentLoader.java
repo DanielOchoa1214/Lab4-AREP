@@ -12,12 +12,10 @@ public class ComponentLoader {
     private static final Map<String, Method> GET_SERVICES = new HashMap<>();
     private static final Map<String, Method> POST_SERVICES = new HashMap<>();
 
-    public static void loadComponents(String[] args) throws ClassNotFoundException {
-        String packageName = "com.example.mypackage";
+    public static void loadComponents() throws ClassNotFoundException {
+        String packageName = "org/arep/taller1/springrestclient";
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        URL packageURL;
-
-        packageURL = classLoader.getResource(packageName);
+        URL packageURL = classLoader.getResource(packageName);
 
         if (packageURL != null) {
             String packagePath = packageURL.getPath();
@@ -28,22 +26,18 @@ public class ComponentLoader {
                     for (File file : files) {
                         String className = file.getName();
                         if (className.endsWith(".class")) {
-                            className = packageName + "." + className.substring(0, className.length() - 6);
-                            Class<?> clazz = classLoader.loadClass(className);
-                            // do something with the class
+                            className = packageName + "/" + className.substring(0, className.length() - 6);
+                            Class<?> clazz = Class.forName(className.replace("/", "."));
                             if(clazz.isAnnotationPresent(Component.class)){
+                                System.out.println("LLamaste a: " + clazz);
                                 Method[] methods = clazz.getDeclaredMethods();
                                 for(Method m : methods){
                                     if(m.isAnnotationPresent(GetMapping.class)){
-                                        // Sacar el endpoint
                                         String endpoint = m.getAnnotation(GetMapping.class).value();
-                                        // Sacar el nombre del metodo
-                                        String name = m.getName();
-                                        System.out.println("LLamaste a: " + name);
-                                        // Crear lista de tipos del metodo
-                                        // Obtener el metodo
-                                        // Agregarlo a tabla de ejecutables
                                         GET_SERVICES.put(endpoint, m);
+                                    } else if(m.isAnnotationPresent(PostMapping.class)){
+                                        String endpoint = m.getAnnotation(PostMapping.class).value();
+                                        POST_SERVICES.put(endpoint, m);
                                     }
                                 }
                             }

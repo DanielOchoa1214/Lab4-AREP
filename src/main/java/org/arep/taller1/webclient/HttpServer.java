@@ -25,7 +25,7 @@ public class HttpServer {
      * @throws IOException Exception is thrown if something goes wrong during the handling if the connections
      */
     public static void main(String[] args) throws IOException, URISyntaxException, InvocationTargetException, IllegalAccessException, ClassNotFoundException {
-        ComponentLoader.loadComponents(new String[]{});
+        ComponentLoader.loadComponents();
         ServerSocket serverSocket = startServerSocket();
         while (true) {
             Socket clientSocket = startClientSocket(serverSocket);

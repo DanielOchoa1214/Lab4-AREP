@@ -3,6 +3,7 @@ package org.arep.taller1.minispark;
 import org.arep.taller1.webclient.HttpServer;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +51,7 @@ public class MiniSpark {
      * @throws IOException In case some I/O functionality failed
      * @throws URISyntaxException In case some URI creation failed
      */
-    public static void start() throws IOException, URISyntaxException {
-        HttpServer.start();
+    public static void start() throws IOException, URISyntaxException, InvocationTargetException, IllegalAccessException, ClassNotFoundException {
+        HttpServer.main(new String[]{});
     }
 }

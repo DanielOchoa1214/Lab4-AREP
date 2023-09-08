@@ -32,7 +32,7 @@ public class HttpServer {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             StringBuilder rawRequest = getRawResponse(in);
-            sendSpringSerponse(clientSocket, rawRequest.toString());
+            sendSpringResponse(clientSocket, rawRequest.toString());
 
             in.close();
         }
@@ -80,7 +80,7 @@ public class HttpServer {
     }
 
     /*
-    Method that send the appropriate response to the request
+    Method that send the appropriate response to the request, simulating how Spark would do it
      */
     private static void sendSparkResponse(Socket clientSocket, String rawRequest) throws IOException, URISyntaxException {
         System.out.println("Received: " + rawRequest.split("\n")[0]);
@@ -99,7 +99,10 @@ public class HttpServer {
         }
     }
 
-    private static void sendSpringSerponse(Socket clientSocket, String rawRequest) throws IOException, URISyntaxException, InvocationTargetException, IllegalAccessException {
+    /*
+    Method that sends the appropriate response to the request, simulating how Spring would do it
+     */
+    private static void sendSpringResponse(Socket clientSocket, String rawRequest) throws IOException, URISyntaxException, InvocationTargetException, IllegalAccessException {
         System.out.println("Received: " + rawRequest.split("\n")[0]);
         String method = rawRequest.split(" ")[0];
         String path = rawRequest.split(" ")[1];

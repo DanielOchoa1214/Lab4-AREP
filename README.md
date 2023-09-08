@@ -23,7 +23,7 @@ Si aún no tienes instaladas estas tecnologias, los siguientes tutoriales te pue
 Para hacer una copia local del proyecto, debes abrir tu terminal, dirigirte al directorio donde quieras que este el proyecto y usar el siguiente comando
 
 ```
-git clone https://github.com/DanielOchoa1214/Lab3_AREP.git
+git clone https://github.com/DanielOchoa1214/Lab4-AREP.git
 ```
 
 Luego muevete al directorio creado y desde ahi ejecuta este comando
@@ -32,7 +32,7 @@ Luego muevete al directorio creado y desde ahi ejecuta este comando
 mvn exec:java
 ```
 
-Ya que la aplicación haya iniciado, puedes dirigirte a tu navegador de preferencia y entrar en http://localhost:35000 para ver la app corriendo, en ella encontraras una muy bonita página que cree con mucho esfuerzo donde puedes ver algún texto con una imagen de un anime genial y más abajo el nuevo y mejorado buscador de películas del taller anterior, el cual ahora puede buscar peliculas usando metodos GET o POST
+Ya que la aplicación haya iniciado, puedes dirigirte a tu navegador de preferencia y entrar en http://localhost:35000 para ver la app corriendo, en ella encontraras una muy bonita página que cree con mucho esfuerzo donde puedes ver algún texto con una imagen de un anime genial y más abajo el nuevo y mejorado buscador de películas del taller anterior, el cual ahora puede buscar peliculas usando metodos GET o POST 
 
 <img width="1680" alt="SAPO" src="https://github.com/DanielOchoa1214/Lab2-AREP/assets/77862016/f4097a88-84cf-481c-8359-80e305df0c80">
 <img width="1680" alt="PERRO" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/4a0bf8d6-34da-45b3-bd53-3ec9a29c0fa6">
@@ -53,11 +53,11 @@ Ahora, el proyecto tiene 2 tests, el primero es una prueba simple donde vemos qu
 
 ### Test de integración
 
-Para probar que el desarrollo de nuestro MiniSpark estuviera correcto se creyó la siguiente clase donde hacemos la creación de los servicios REST 
+Para probar que el desarrollo de nuestro MiniSpring estuviera correcto se creo la siguiente clase donde hacemos la creación de los servicios REST 
 
-<img width="644" alt="Screenshot 2023-09-01 at 4 38 44 PM" src="https://github.com/DanielOchoa1214/Lab3_AREP/assets/77862016/24714541-cc99-4565-8c72-e1ec03bca348">
+<img width="546" alt="Screenshot 2023-09-08 at 12 42 54 PM" src="https://github.com/DanielOchoa1214/Lab4-AREP/assets/77862016/04a4799a-dcbd-4229-854a-ed40b65d8f29">
 
-En ella, similar a Spark, creamos con la función get() un método que responderá a peticiones GET hechas a través de la ruta /hello, y de igual manera peticiones POST por el mismo endpoint
+En ella, similar a Spring, creamos con la función getMovie() un método que responderá a peticiones GET hechas a través de la ruta /hello, y de igual manera podremos responder peticiones POST por el mismo endpoint con la función postMovie()
 
 Y para probar su correcto funcionamiento a la página FrontEnd agregamos un nuevo formulario donde mandáremos la información de la película a través del body de un POST
 
@@ -113,7 +113,7 @@ Como se especificó anteriormente, a grandes rasgos creamos la arquitectura sepa
 
 * File Handlers - Para este componente creamos el paquete "filehandlers" para poder responder acordemente a las peticiones hechas por el cliente encargado de leer los archivos que se le pida y devolverlos, ya sean archivos de texto, imágenes o mensajes de error.
 * REST Handler - Para este componente creamos el paquete "resthandler" que es el encargado de enrutar con nuestro "Backend" (que sería la fachada) las peticiones REST que se le hagan a nuestro servidor, en este caso la búsqueda de películas.
-* MiniSpark - Para este componente creamos el paquete "minispark" donde dejamos toda la lógica necesaria para guardar funcionalidades en el código para luego buscarlas y correrlas cuando sea necesario
+* MiniSpring - Para este componente creamos el paquete "springrestclient" donde dejamos toda la lógica necesaria para guardar funcionalidades en el código para luego buscarlas y correrlas cuando sea necesario
 
 ### Extencibilidad
 

@@ -1,6 +1,6 @@
-# Taller 3 AREP - Daniel Sebastian Ochoa Urrego
+# Taller 4 AREP - Daniel Sebastian Ochoa Urrego
 
-En este taller mejoramos el servidor creado anteriormente, de manera que podamos ofrecer la creación de servicios REST de manera sencilla para desarrolladores, simulando el microframework [SparkJava](https://sparkjava.com/)
+En este taller cambiaremos la manera en la que ofrecemos funcionalidades REST, ahora lo haremos con el uso de anotaciones simulando el funcionamiento de SpringBoot 
 
 ## Iniciando
 
